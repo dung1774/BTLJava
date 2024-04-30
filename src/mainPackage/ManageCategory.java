@@ -14,9 +14,7 @@ import javax.swing.table.TableModel;
 public class ManageCategory extends JFrame implements ActionListener, MouseListener {
 
     private int categoryPk = 0;
-
-    JScrollPane jScrollPane2 = new JScrollPane();
-    JTree jTree1 = new JTree();
+    
     JLabel jLabel1 = new JLabel();
     JScrollPane jScrollPane1 = new JScrollPane();
     JTable tableCategory = new JTable();
@@ -43,8 +41,6 @@ public class ManageCategory extends JFrame implements ActionListener, MouseListe
     }
 
     private void initComponents() {
-
-        jScrollPane2.setViewportView(jTree1);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -139,14 +135,14 @@ public class ManageCategory extends JFrame implements ActionListener, MouseListe
         if (d.getSource().equals(btnSave)) {
             String name = txtName.getText();
             if (validateFields()) {
-                JOptionPane.showMessageDialog(null, "All fields are required");
+                JOptionPane.showMessageDialog(null, "Tất cả các trường không được để trống!");
             } else {
                 try {
                     Connection con = ConnectionProvider.getCon();
                     PreparedStatement ps = con.prepareStatement("insert into category (name) values(?)");
                     ps.setString(1, name);
                     ps.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "category Added Sucessfully");
+                    JOptionPane.showMessageDialog(null, "Thêm danh mục thành công!");
                     setVisible(false);
                     new ManageCategory().setVisible(true);
                 } catch (Exception e) {
@@ -158,7 +154,7 @@ public class ManageCategory extends JFrame implements ActionListener, MouseListe
         if (d.getSource().equals(btnUpdate)) {
             String name = txtName.getText();
             if (validateFields()) {
-                JOptionPane.showMessageDialog(null, "All fields are required");
+                JOptionPane.showMessageDialog(null, "Tất cả các trường không được để trống!");
             } else {
                 try {
                     Connection con = ConnectionProvider.getCon();
@@ -166,7 +162,7 @@ public class ManageCategory extends JFrame implements ActionListener, MouseListe
                     ps.setString(1, name);
                     ps.setInt(2, categoryPk);
                     ps.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Category Updated Sucessfully");
+                    JOptionPane.showMessageDialog(null, "Cập nhật danh mục thành công!");
                     setVisible(false);
                     new ManageCategory().setVisible(true);
                 } catch (Exception e) {

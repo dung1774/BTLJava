@@ -14,8 +14,8 @@ public class OpenPdf {
                 Process p = Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + InventoryUtils.billPath + "" + id + ".pdf");
                 checkBill = false;
             } else {
-                JOptionPane.showMessageDialog(null, "File is not Exists");
-                int a = JOptionPane.showConfirmDialog(null, "Do you want to remove this file?", "Select", JOptionPane.YES_NO_OPTION);
+                JOptionPane.showMessageDialog(null, "hoá đơn không tồn tại!");
+                int a = JOptionPane.showConfirmDialog(null, "Bạn có muốn xoá file này không?", "Select", JOptionPane.YES_NO_OPTION);
                 if (a == 0) {
                     checkBill = true;
                 } else {
@@ -32,7 +32,7 @@ public class OpenPdf {
             if ((new File(InventoryUtils.billPath + id + ".pdf")).exists()) {
                 Process p = Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + InventoryUtils.billPath + "" + id + ".pdf");
             } else {
-                JOptionPane.showMessageDialog(null, "File is not Exists");
+                JOptionPane.showMessageDialog(null, "hoá đơn không tồn tại!");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);

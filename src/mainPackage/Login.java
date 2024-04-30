@@ -124,7 +124,7 @@ public class Login extends JFrame implements ActionListener {
                 }
                 con.close();
                 if (temp == 0) {
-                    JOptionPane.showMessageDialog(null, "Incorrect Email or Password");
+                    JOptionPane.showMessageDialog(null, "Sai email hoặc mật khẩu!");
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
@@ -136,7 +136,7 @@ public class Login extends JFrame implements ActionListener {
         }
 
         if (d.getSource().equals(btnClose)) {
-            int a = JOptionPane.showConfirmDialog(null, "Do you want to close application?", "Select", JOptionPane.YES_NO_OPTION);
+            int a = JOptionPane.showConfirmDialog(null, "Bạn có muốn đóng ứng dụng?", "Select", JOptionPane.YES_NO_OPTION);
             if (a == 0) {
                 System.exit(0);
             }

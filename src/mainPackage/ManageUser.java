@@ -192,7 +192,7 @@ public class ManageUser extends JFrame implements ActionListener, MouseListener 
             String address = txtAddress.getText();
 
             if (validateFields("new")) {
-                JOptionPane.showMessageDialog(null, "All field are required");
+                JOptionPane.showMessageDialog(null, "Tất cả các trường không được để trống!");
             } else {
                 try {
                     Connection con = ConnectionProvider.getCon();
@@ -203,7 +203,7 @@ public class ManageUser extends JFrame implements ActionListener, MouseListener 
                     ps.setString(4, password);
                     ps.setString(5, address);
                     ps.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "admin Added Successfully");
+                    JOptionPane.showMessageDialog(null, "Thêm admin thành công!");
                     setVisible(false);
                     new ManageUser().setVisible(true);
                 } catch (Exception e) {
@@ -219,7 +219,7 @@ public class ManageUser extends JFrame implements ActionListener, MouseListener 
             String address = txtAddress.getText();
 
             if (validateFields("edit")) {
-                JOptionPane.showMessageDialog(null, "All field are required");
+                JOptionPane.showMessageDialog(null, "Tất cả các trường không được để trống!");
             } else {
                 try {
                     Connection con = ConnectionProvider.getCon();
@@ -230,7 +230,7 @@ public class ManageUser extends JFrame implements ActionListener, MouseListener 
                     ps.setString(4, address);
                     ps.setInt(6, adminPk);
                     ps.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "admin Updated Successfully");
+                    JOptionPane.showMessageDialog(null, "Cập nhật admin thành công!");
                     setVisible(false);
                     new ManageUser().setVisible(true);
                 } catch (Exception e) {

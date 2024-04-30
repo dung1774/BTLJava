@@ -150,7 +150,7 @@ public class ManageCustomer extends JFrame implements ActionListener, MouseListe
             String email = txtEmail.getText();
 
             if (validateFields()) {
-                JOptionPane.showMessageDialog(null, "all fields are required");
+                JOptionPane.showMessageDialog(null, "Tất cả các trường không được để trống!");
             } else {
                 try {
                     Connection con = ConnectionProvider.getCon();
@@ -159,7 +159,7 @@ public class ManageCustomer extends JFrame implements ActionListener, MouseListe
                     ps.setString(2, mobileNumber);
                     ps.setString(3, email);
                     ps.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "customer Added Succesfully");
+                    JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công!");
                     setVisible(false);
                     new ManageCustomer().setVisible(true);
                 } catch (Exception e) {
@@ -179,7 +179,7 @@ public class ManageCustomer extends JFrame implements ActionListener, MouseListe
             String email = txtEmail.getText();
 
             if (validateFields()) {
-                JOptionPane.showMessageDialog(null, "all fields are required");
+                JOptionPane.showMessageDialog(null, "Tất cả các trường không được để trống!");
             } else {
                 try {
                     Connection con = ConnectionProvider.getCon();
@@ -189,7 +189,7 @@ public class ManageCustomer extends JFrame implements ActionListener, MouseListe
                     ps.setString(3, email);
                     ps.setInt(4, appuserPk);
                     ps.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "customer changed Succesfully");
+                    JOptionPane.showMessageDialog(null, "Cập nhật khách hàng thành công!");
                     setVisible(false);
                     new ManageCustomer().setVisible(true);
                 } catch (Exception e) {

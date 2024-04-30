@@ -23,22 +23,22 @@ public class ManageOrder extends JFrame implements ActionListener, MouseListener
 
     private int currentCustomerId = -1;
 
-    JLabel jLabel11 = new JLabel();
-    JLabel jLabel12 = new JLabel();
     JLabel jLabel1 = new JLabel();
     JLabel jLabel2 = new JLabel();
+    JLabel jLabel3 = new JLabel();
     JLabel jLabel4 = new JLabel();
     JLabel jLabel5 = new JLabel();
     JLabel jLabel6 = new JLabel();
     JLabel jLabel7 = new JLabel();
+    JLabel jLabel8 = new JLabel();
+    JLabel jLabel9 = new JLabel();
+    JLabel jLabel10 = new JLabel();
+    JLabel jLabel11 = new JLabel();
+    JLabel jLabel12 = new JLabel();
+    JLabel jLabel13 = new JLabel();
     JLabel jLabel14 = new JLabel();
     JLabel jLabel15 = new JLabel();
-    JLabel jLabel10 = new JLabel();
-    JLabel jLabel3 = new JLabel();
-    JLabel jLabel9 = new JLabel();
     JLabel jLabel16 = new JLabel();
-    JLabel jLabel13 = new JLabel();
-    JLabel jLabel8 = new JLabel();
     JLabel lbFinalTotalPrice = new JLabel();
 
     JTextField txtCustomerName = new JTextField();
@@ -59,8 +59,8 @@ public class ManageOrder extends JFrame implements ActionListener, MouseListener
     JTable tableProduct = new JTable();
     JTable tableCart = new JTable();
 
-    JScrollPane jScrollPane2 = new JScrollPane();
     JScrollPane jScrollPane1 = new JScrollPane();
+    JScrollPane jScrollPane2 = new JScrollPane();
     JScrollPane jScrollPane3 = new JScrollPane();
 
     private int customerPk = 0;
@@ -117,10 +117,10 @@ public class ManageOrder extends JFrame implements ActionListener, MouseListener
         jLabel16.setText("Product List");
 
         jLabel14.setFont(new Font("Tahoma", 1, 18));
-        jLabel14.setText("Total Amount RS:");
+        jLabel14.setText("Tổng tiền:");
 
         lbFinalTotalPrice.setFont(new Font("Tahoma", 1, 18));
-        lbFinalTotalPrice.setText("00000");
+        lbFinalTotalPrice.setText("00000 VND");
 
         jLabel8.setFont(new Font("Tahoma", 1, 12));
         jLabel8.setText("Email");
@@ -251,7 +251,7 @@ public class ManageOrder extends JFrame implements ActionListener, MouseListener
         jLabel15.setBounds(390, 650, 120, 15);
         
         add(lbFinalTotalPrice);
-        lbFinalTotalPrice.setBounds(1180, 390, 70, 22);
+        lbFinalTotalPrice.setBounds(1120, 390, 150, 25);
         
         add(btnSaveOrderDetails);
         btnSaveOrderDetails.setBounds(870, 460, 470, 27);
@@ -420,7 +420,7 @@ public class ManageOrder extends JFrame implements ActionListener, MouseListener
 
                     doc.add(tb1);
                     doc.add(starLine);
-                    Paragraph thanksMsg = new Paragraph("Thank you, Please visit again.");
+                    Paragraph thanksMsg = new Paragraph("Cảm ơn, Hẹn gặp bạn lần sau!");
                     doc.add(thanksMsg);
                     OpenPdf.OpenByIdForAdmin(orderId);
 
@@ -431,23 +431,23 @@ public class ManageOrder extends JFrame implements ActionListener, MouseListener
                 setVisible(false);
                 new ManageOrder().setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(null, "Please add some product to cart or select customer");
+                JOptionPane.showMessageDialog(null, "Vui lòng thêm sản phẩm vào giỏ hàng!");
             }
         }
 
         if (d.getSource().equals(btnDelete)) {
             try {
                 int index = tableCart.getSelectedRow();
-                int a = JOptionPane.showConfirmDialog(null, "Do you want to remove this product", "Select", JOptionPane.YES_NO_OPTION);
+                int a = JOptionPane.showConfirmDialog(null, "Bạn có muốn gỡ sản phẩm khỏi giỏ hàng không?", "Select", JOptionPane.YES_NO_OPTION);
                 if (a == 0) {
                     TableModel model = tableCart.getModel();
                     String subTotal = model.getValueAt(index, 6).toString();
                     finalTotalPrice = finalTotalPrice - Integer.parseInt(subTotal);
-                    lbFinalTotalPrice.setText(String.valueOf(finalTotalPrice));
+                    lbFinalTotalPrice.setText(String.valueOf(finalTotalPrice)+" VND");
                     ((DefaultTableModel) tableCart.getModel()).removeRow(index);
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "choose at least one product to remove");
+                JOptionPane.showMessageDialog(null, "Chọn ít nhất 1 sản phẩm để loại bỏ!");
             }
         }
 
@@ -473,7 +473,7 @@ public class ManageOrder extends JFrame implements ActionListener, MouseListener
                             checkStock = 1;
                             totalQuantity = rs.getInt("quantity");
                         } else {
-                            JOptionPane.showMessageDialog(null, "Product is out of stock. Only " + rs.getInt("quantity") + " Left");
+                            JOptionPane.showMessageDialog(null, "Đã hết hàng trong kho. chỉ còn lại " + rs.getInt("quantity") + " sản phẩm!");
                         }
                     }
                 } catch (Exception e) {
@@ -483,7 +483,7 @@ public class ManageOrder extends JFrame implements ActionListener, MouseListener
                 if (checkStock == 1) {
                     // Kiểm tra nếu đã có khách hàng được chọn trước đó và customerPk của mục mới không khớp
                     if (currentCustomerId != -1 && currentCustomerId != customerPk) {
-                        JOptionPane.showMessageDialog(null, "only one customer can order at a time");
+                        JOptionPane.showMessageDialog(null, "Mỗi lần chỉ 1 khách được đặt hàng!");
                         return; // Không thêm sản phẩm vào giỏ hàng nếu có lỗi xảy ra
                     }
                     DefaultTableModel model = (DefaultTableModel) tableCart.getModel();
@@ -492,9 +492,9 @@ public class ManageOrder extends JFrame implements ActionListener, MouseListener
                             if (Integer.parseInt(model.getValueAt(i, 1).toString()) == productPk) {
                                 checkProductAlreadyExistInCart = 1;
                                 existingProductIndex = i;
-                                JOptionPane.showMessageDialog(null, "Product already exist in cart");
+                                JOptionPane.showMessageDialog(null, "Sản phẩm đã có trong giỏ hàng!");
                                 try {
-                                    int a = JOptionPane.showConfirmDialog(null, "Do you still want to add this product", "Select", JOptionPane.YES_NO_OPTION);
+                                    int a = JOptionPane.showConfirmDialog(null, "Bạn vẫn muốn thêm sản phẩm này?", "Select", JOptionPane.YES_NO_OPTION);
                                     int existingQuantity = Integer.parseInt(model.getValueAt(existingProductIndex, 3).toString());
                                     int newQuantity = existingQuantity + Integer.parseInt(noOfUnits);
                                     if (a == 0 && newQuantity <= totalQuantity) {
@@ -502,10 +502,10 @@ public class ManageOrder extends JFrame implements ActionListener, MouseListener
                                         model.setValueAt(newQuantity, existingProductIndex, 3);
                                         model.setValueAt(newTotalPrice, existingProductIndex, 6);
                                         finalTotalPrice += Integer.parseInt(noOfUnits) * Integer.parseInt(productPrice);
-                                        lbFinalTotalPrice.setText(String.valueOf(finalTotalPrice));
-                                        JOptionPane.showMessageDialog(null, "the amount of product has been updated");
+                                        lbFinalTotalPrice.setText(String.valueOf(finalTotalPrice)+" VND");
+                                        JOptionPane.showMessageDialog(null, "Đã cập nhật thêm số lượng sản phẩm!");
                                     } else {
-                                        JOptionPane.showMessageDialog(null, "Product is out of stock. Only " + (totalQuantity - existingQuantity) + " Left");
+                                        JOptionPane.showMessageDialog(null, "Đã hết hàng trong kho. chỉ còn lại " + (totalQuantity - existingQuantity) + " sản phẩm!");
                                     }
                                 } catch (Exception e) {
                                     JOptionPane.showMessageDialog(null, e);
@@ -520,13 +520,13 @@ public class ManageOrder extends JFrame implements ActionListener, MouseListener
                         }
                         model.addRow(new Object[]{customerPk, productPk, productName, noOfUnits, productPrice, productDescription, totalPrice});
                         finalTotalPrice = finalTotalPrice + totalPrice;
-                        lbFinalTotalPrice.setText(String.valueOf(finalTotalPrice));
-                        JOptionPane.showMessageDialog(null, "Added successfully");
+                        lbFinalTotalPrice.setText(String.valueOf(finalTotalPrice)+" VND");
+                        JOptionPane.showMessageDialog(null, "Thêm thành công!");
                     }
                     clearProductFields();
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "No of quantity and product field is required");
+                JOptionPane.showMessageDialog(null, "Cần nhập só lượng sản phẩm muốn mua!");
             }
         }
     }

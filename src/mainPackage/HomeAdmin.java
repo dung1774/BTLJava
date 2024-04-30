@@ -87,7 +87,7 @@ public class HomeAdmin extends JFrame implements ActionListener {
         btnLogOut.setBounds(1084, 70, 140, 50);
         btnLogOut.addActionListener(this);
 
-        jLabel1.setIcon(new ImageIcon(getClass().getResource("/images/home_background.png")));
+        jLabel1.setIcon(new ImageIcon(getClass().getResource("/images/Background1.png")));
         jLabel1.setText("jLabel1");
         add(jLabel1);
         jLabel1.setBounds(0, 0, 1370, 768);
@@ -134,7 +134,7 @@ public class HomeAdmin extends JFrame implements ActionListener {
         }
 
         if (d.getSource().equals(btnLogOut)) {
-            int a = JOptionPane.showConfirmDialog(null, "Do you want to logout application?", "Select", JOptionPane.YES_NO_OPTION);
+            int a = JOptionPane.showConfirmDialog(null, "Bạn có muốn thoát khỏi ứng dụng?", "Select", JOptionPane.YES_NO_OPTION);
             if (a == 0) {
                 setVisible(false);
                 new Login().setVisible(true);

@@ -146,11 +146,11 @@ public class ViewOrders extends JFrame implements ActionListener, MouseListener 
                     Statement st = con.createStatement();
                     int rowsAffected = st.executeUpdate("delete from orderDetail where orderId='" + orderId + "'");
                     if (rowsAffected > 0) {
-                        JOptionPane.showMessageDialog(null, "Order Detail Deleted Successfully");
+                        JOptionPane.showMessageDialog(null, "Xoá hoá đơn thành công!");
                         setVisible(false);
                         new ViewOrders().setVisible(true);
                     } else {
-                        JOptionPane.showMessageDialog(null, "No matching order detail found for deletion.");
+                        JOptionPane.showMessageDialog(null, "Không tìm thấy hoá đơn tương ứng để xoá!");
                     }
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, e);

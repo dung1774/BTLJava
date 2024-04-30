@@ -121,7 +121,17 @@ public class SignUp extends JFrame implements ActionListener {
             String mobileNumber = txtMobileNumber.getText();
             String address = txtAddress.getText();
             if (email.isEmpty() || password.isEmpty() || address.isEmpty() || address.isEmpty() || mobileNumber.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Please fill in all fields.");
+                // Kiểm tra định dạng email
+                if (!email.matches("[a-zA-Z0-9._%+-]+@gmail+.com")) {
+                    JOptionPane.showMessageDialog(this, "Email không hợp lệ!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                // Kiểm tra định dạng số điện thoại (chỉ chứa các chữ số)
+                if (!mobileNumber.matches("\\d{10,11}")) {
+                    JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!");
                 return;
             }
             try {
@@ -129,7 +139,7 @@ public class SignUp extends JFrame implements ActionListener {
                 Statement st = con.createStatement();
                 ResultSet rs = st.executeQuery("SELECT * FROM customer WHERE email='" + email + "'");
                 if (rs.next()) {
-                    JOptionPane.showMessageDialog(null, "Account already exists. Please sign in.");
+                    JOptionPane.showMessageDialog(null, "Email đã tồn tại!");
                 } else {
                     PreparedStatement ps = con.prepareStatement("insert into customer (name,password,mobileNumber,email,address) values (?,?,?,?,?)");
                     ps.setString(1, name);
@@ -138,7 +148,7 @@ public class SignUp extends JFrame implements ActionListener {
                     ps.setString(2, password);
                     ps.setString(5, address);
                     ps.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Account created successfully.");
+                    JOptionPane.showMessageDialog(null, "Tạo tài khoản thành công!");
                 }
                 con.close();
             } catch (Exception e) {
@@ -147,7 +157,7 @@ public class SignUp extends JFrame implements ActionListener {
         }
 
         if (d.getSource().equals(btnClose)) {
-            int a = JOptionPane.showConfirmDialog(null, "Do you want to close sign up?", "Select", JOptionPane.YES_NO_OPTION);
+            int a = JOptionPane.showConfirmDialog(null, "Bạn có muốn đóng cửa sổ đăng ký?", "Select", JOptionPane.YES_NO_OPTION);
             if (a == 0) {
                 setVisible(false);
                 new Login().setVisible(true);

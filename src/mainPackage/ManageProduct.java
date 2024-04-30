@@ -209,7 +209,7 @@ public class ManageProduct extends JFrame implements ActionListener, MouseListen
             String category = (String) comboBoxCategory.getSelectedItem();
             String categoryID[] = category.split("-", 0);
             if (validateFields("new")) {
-                JOptionPane.showMessageDialog(null, "All fields are required");
+                JOptionPane.showMessageDialog(null, "Tất cả các trường không được để trống!");
             } else {
                 try {
                     Connection con = ConnectionProvider.getCon();
@@ -220,7 +220,7 @@ public class ManageProduct extends JFrame implements ActionListener, MouseListen
                     ps.setString(4, description);
                     ps.setString(5, categoryID[0]);
                     ps.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Product Added Succesfully");
+                    JOptionPane.showMessageDialog(null, "Thêm sản phẩm thành công!");
                     setVisible(false);
                     new ManageProduct().setVisible(true);
                 } catch (Exception e) {
@@ -237,7 +237,7 @@ public class ManageProduct extends JFrame implements ActionListener, MouseListen
             String category = (String) comboBoxCategory.getSelectedItem();
             String categoryId[] = category.split("-", 0);
             if (validateFields("edit")) {
-                JOptionPane.showMessageDialog(null, "All fields are required");
+                JOptionPane.showMessageDialog(null, "Tất cả các trường không được để trống!");
             } else {
                 try {
                     if (!quantity.equals("")) {
@@ -252,7 +252,7 @@ public class ManageProduct extends JFrame implements ActionListener, MouseListen
                     ps.setString(5, categoryId[0]);
                     ps.setInt(6, productPk);
                     ps.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Product Updated Succesfully");
+                    JOptionPane.showMessageDialog(null, "Cập nhật sản phẩm thành công!");
                     setVisible(false);
                     new ManageProduct().setVisible(true);
                 } catch (Exception e) {
