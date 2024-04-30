@@ -324,7 +324,7 @@ public class CustomerOrder extends JFrame implements ActionListener, MouseListen
 
                     doc.add(tb1);
                     doc.add(starLine);
-                    Paragraph thanksMsg = new Paragraph("Cảm ơn, Hẹn gặp bạn lần sau!");
+                    Paragraph thanksMsg = new Paragraph("Thank you. Please visit again!");
                     doc.add(thanksMsg);
                     OpenPdf.OpenByIdForCustomer(orderId);
 

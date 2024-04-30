@@ -420,7 +420,7 @@ public class ManageOrder extends JFrame implements ActionListener, MouseListener
 
                     doc.add(tb1);
                     doc.add(starLine);
-                    Paragraph thanksMsg = new Paragraph("Cảm ơn, Hẹn gặp bạn lần sau!");
+                    Paragraph thanksMsg = new Paragraph("Thank you. Please visit again!");
                     doc.add(thanksMsg);
                     OpenPdf.OpenByIdForAdmin(orderId);
 
@@ -504,7 +504,7 @@ public class ManageOrder extends JFrame implements ActionListener, MouseListener
                                         finalTotalPrice += Integer.parseInt(noOfUnits) * Integer.parseInt(productPrice);
                                         lbFinalTotalPrice.setText(String.valueOf(finalTotalPrice)+" VND");
                                         JOptionPane.showMessageDialog(null, "Đã cập nhật thêm số lượng sản phẩm!");
-                                    } else {
+                                    } else if (newQuantity > totalQuantity) {
                                         JOptionPane.showMessageDialog(null, "Đã hết hàng trong kho. chỉ còn lại " + (totalQuantity - existingQuantity) + " sản phẩm!");
                                     }
                                 } catch (Exception e) {
