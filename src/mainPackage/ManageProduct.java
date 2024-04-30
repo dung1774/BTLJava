@@ -282,7 +282,7 @@ public class ManageProduct extends JFrame implements ActionListener, MouseListen
                         if (rowsAffected > 0) {
                             JOptionPane.showMessageDialog(null, "xoá sản phẩm thành công!");
                             setVisible(false);
-                            new ManageCategory().setVisible(true);
+                            new ManageProduct().setVisible(true);
                         } else {
                             JOptionPane.showMessageDialog(null, "không tìm thầy thông tin sản phẩm tương ứng để xoá!.");
                         }
