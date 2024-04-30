@@ -14,17 +14,17 @@ import javax.swing.table.TableModel;
 public class ManageCategory extends JFrame implements ActionListener, MouseListener {
 
     private int categoryPk = 0;
-    
+
     JLabel jLabel1 = new JLabel();
     JScrollPane jScrollPane1 = new JScrollPane();
     JTable tableCategory = new JTable();
     JTextField txtName = new JTextField();
     JButton btnSave = new JButton();
     JButton btnUpdate = new JButton();
+    JButton btnDelete = new JButton();
+    JButton btnReset = new JButton();
     JButton btnClose = new JButton();
     JLabel jLabel2 = new JLabel();
-    JButton btnReset = new JButton();
-    JButton btnDelete = new JButton();
     JLabel jLabel3 = new JLabel();
 
     public ManageCategory() {
@@ -171,10 +171,39 @@ public class ManageCategory extends JFrame implements ActionListener, MouseListe
             }
         }
 
+        if (d.getSource().equals(btnDelete)) {
+            try {
+                int index = tableCategory.getSelectedRow();
+                TableModel model = tableCategory.getModel();
+                String id = model.getValueAt(index, 0).toString();
+                try {
+                    Connection con = ConnectionProvider.getCon();
+                    Statement st = con.createStatement();
+                    int a = JOptionPane.showConfirmDialog(null, "Bạn có muốn xoá danh mục này không?", "Select", JOptionPane.YES_NO_OPTION);
+                    int b = JOptionPane.showConfirmDialog(null, "nếu xoá danh mục thì toàn bộ sản phẩm thuộc danh mục này cũng sẽ bị xoá! Bạn có chắc chắn muốn xoá?", "Select", JOptionPane.YES_NO_OPTION);
+                    if (a == 0 && b == 0) {
+                        int rowsAffected = st.executeUpdate("delete from category where category_pk='" + id + "'");
+                        int rowsAffected2 = st.executeUpdate("delete from product where category_fk='" + id + "'");
+                        if (rowsAffected > 0) {
+                            JOptionPane.showMessageDialog(null, "xoá danh mục sản phẩm thành công!");
+                            setVisible(false);
+                            new ManageCategory().setVisible(true);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "không tìm thầy danh mục sản phẩm tương ứng để xoá!.");
+                        }
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Chọn ít nhất 1 danh mục sản phẩm để xoá!");
+            }
+        }
+
         if (d.getSource().equals(btnClose)) {
             setVisible(false);
         }
-        
+
         if (d.getSource().equals(btnReset)) {
             setVisible(false);
             new ManageCategory().setVisible(true);

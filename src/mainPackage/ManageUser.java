@@ -27,6 +27,7 @@ public class ManageUser extends JFrame implements ActionListener, MouseListener 
     JTextField txtPassword = new JTextField();
     JButton btnSave = new JButton();
     JButton btnUpdate = new JButton();
+    JButton btnDelete = new JButton();
     JButton btnReset = new JButton();
     JButton btnClose = new JButton();
     JLabel jLabel8 = new JLabel();
@@ -58,7 +59,7 @@ public class ManageUser extends JFrame implements ActionListener, MouseListener 
         setUndecorated(true);
 
         setLayout(null);
-        setSize(850, 600);
+        setSize(900, 600);
 
         jLabel1.setFont(new Font("Impact", 1, 36));
         jLabel1.setText("Manage User");
@@ -84,7 +85,7 @@ public class ManageUser extends JFrame implements ActionListener, MouseListener 
 
         txtName.setFont(new Font("Segoe UI", 1, 12));
         add(txtName);
-        txtName.setBounds(470, 90, 340, 27);
+        txtName.setBounds(470, 90, 400, 27);
 
         jLabel3.setFont(new Font("Segoe UI", 1, 12));
         jLabel3.setText("Mobile Number");
@@ -93,7 +94,7 @@ public class ManageUser extends JFrame implements ActionListener, MouseListener 
 
         txtMobileNumber.setFont(new Font("Segoe UI", 1, 12));
         add(txtMobileNumber);
-        txtMobileNumber.setBounds(470, 170, 340, 27);
+        txtMobileNumber.setBounds(470, 170, 400, 27);
 
         jLabel4.setFont(new Font("Segoe UI", 1, 12));
         jLabel4.setText("Email");
@@ -102,7 +103,7 @@ public class ManageUser extends JFrame implements ActionListener, MouseListener 
 
         txtEmail.setFont(new Font("Segoe UI", 1, 12));
         add(txtEmail);
-        txtEmail.setBounds(470, 240, 340, 27);
+        txtEmail.setBounds(470, 240, 400, 27);
 
         jLabel5.setFont(new Font("Segoe UI", 1, 12));
         jLabel5.setText("Address");
@@ -111,7 +112,7 @@ public class ManageUser extends JFrame implements ActionListener, MouseListener 
 
         txtAddress.setFont(new Font("Segoe UI", 1, 12));
         add(txtAddress);
-        txtAddress.setBounds(470, 320, 340, 27);
+        txtAddress.setBounds(470, 320, 400, 27);
 
         jLabel7.setFont(new Font("Segoe UI", 1, 12));
         jLabel7.setText("Password");
@@ -120,36 +121,42 @@ public class ManageUser extends JFrame implements ActionListener, MouseListener 
 
         txtPassword.setFont(new Font("Segoe UI", 1, 12));
         add(txtPassword);
-        txtPassword.setBounds(470, 390, 340, 27);
+        txtPassword.setBounds(470, 390, 400, 27);
 
         btnSave.setFont(new Font("Segoe UI", 1, 12));
         btnSave.setText("Save");
         add(btnSave);
-        btnSave.setBounds(470, 500, 72, 27);
+        btnSave.setBounds(470, 480, 72, 27);
         btnSave.addActionListener(this);
 
         btnUpdate.setFont(new Font("Segoe UI", 1, 12));
         btnUpdate.setText("Update");
         add(btnUpdate);
-        btnUpdate.setBounds(560, 500, 72, 27);
+        btnUpdate.setBounds(550, 480, 72, 27);
         btnUpdate.addActionListener(this);
+
+        btnDelete.setFont(new Font("Segoe UI", 1, 12));
+        btnDelete.setText("Delete");
+        add(btnDelete);
+        btnDelete.setBounds(630, 480, 72, 27);
+        btnDelete.addActionListener(this);
 
         btnReset.setFont(new Font("Segoe UI", 1, 12));
         btnReset.setText("Reset");
         add(btnReset);
-        btnReset.setBounds(650, 500, 72, 27);
+        btnReset.setBounds(710, 480, 72, 27);
         btnReset.addActionListener(this);
 
         btnClose.setFont(new Font("Segoe UI", 1, 12));
         btnClose.setText("Close");
         add(btnClose);
-        btnClose.setBounds(740, 500, 72, 27);
+        btnClose.setBounds(790, 480, 72, 27);
         btnClose.addActionListener(this);
 
-        jLabel8.setIcon(new ImageIcon(getClass().getResource("/images/All_page_Background.png")));
+        jLabel8.setIcon(new ImageIcon(getClass().getResource("/images/Orders_Background.png")));
         jLabel8.setText("jLabel8");
         add(jLabel8);
-        jLabel8.setBounds(0, 0, 850, 600);
+        jLabel8.setBounds(0, 0, 900, 600);
     }
 
     private void formComponentShown(ComponentEvent evt) {
@@ -228,7 +235,7 @@ public class ManageUser extends JFrame implements ActionListener, MouseListener 
                     ps.setString(2, mobileNumber);
                     ps.setString(3, email);
                     ps.setString(4, address);
-                    ps.setInt(6, adminPk);
+                    ps.setInt(5, adminPk);
                     ps.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Cập nhật admin thành công!");
                     setVisible(false);
@@ -236,6 +243,33 @@ public class ManageUser extends JFrame implements ActionListener, MouseListener 
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, e);
                 }
+            }
+        }
+
+        if (d.getSource().equals(btnDelete)) {
+            try {
+                int index = tableUser.getSelectedRow();
+                TableModel model = tableUser.getModel();
+                String id = model.getValueAt(index, 0).toString();
+                try {
+                    Connection con = ConnectionProvider.getCon();
+                    Statement st = con.createStatement();
+                    int a = JOptionPane.showConfirmDialog(null, "Bạn có muốn xoá admin này không?", "Select", JOptionPane.YES_NO_OPTION);
+                    if (a == 0) {
+                        int rowsAffected = st.executeUpdate("delete from admin where admin_pk='" + id + "'");
+                        if (rowsAffected > 0) {
+                            JOptionPane.showMessageDialog(null, "xoá admin thành công!");
+                            setVisible(false);
+                            new ManageUser().setVisible(true);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "không tìm thầy thông tin admin tương ứng để xoá!.");
+                        }
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Chọn ít nhất 1 admin để xoá!");
             }
         }
 

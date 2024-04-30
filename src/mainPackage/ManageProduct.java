@@ -28,6 +28,7 @@ public class ManageProduct extends JFrame implements ActionListener, MouseListen
     JComboBox comboBoxCategory = new JComboBox<>();
     JButton btnSave = new JButton();
     JButton btnUpdate = new JButton();
+    JButton btnDelete = new JButton();
     JButton btnReset = new JButton();
     JButton btnClose = new JButton();
     JLabel jLabel3 = new JLabel();
@@ -57,9 +58,9 @@ public class ManageProduct extends JFrame implements ActionListener, MouseListen
                 formComponentShown(evt);
             }
         });
-        
+
         setLayout(null);
-        setSize(850, 600);
+        setSize(900, 600);
 
         jLabel1.setFont(new Font("Impact", 1, 36));
         jLabel1.setText("Manage Product");
@@ -85,7 +86,7 @@ public class ManageProduct extends JFrame implements ActionListener, MouseListen
 
         txtName.setFont(new Font("Segoe UI", 1, 12));
         add(txtName);
-        txtName.setBounds(500, 130, 320, 27);
+        txtName.setBounds(500, 130, 370, 27);
 
         lblQuantity.setFont(new Font("Segoe UI", 1, 12));
         lblQuantity.setText("Quantity");
@@ -94,7 +95,7 @@ public class ManageProduct extends JFrame implements ActionListener, MouseListen
 
         txtQuantity.setFont(new Font("Segoe UI", 1, 12));
         add(txtQuantity);
-        txtQuantity.setBounds(500, 200, 320, 27);
+        txtQuantity.setBounds(500, 200, 370, 27);
 
         jLabel4.setFont(new Font("Segoe UI", 1, 12));
         jLabel4.setText("Price");
@@ -103,7 +104,7 @@ public class ManageProduct extends JFrame implements ActionListener, MouseListen
 
         txtPrice.setFont(new Font("Segoe UI", 1, 12));
         add(txtPrice);
-        txtPrice.setBounds(500, 270, 320, 27);
+        txtPrice.setBounds(500, 270, 370, 27);
 
         jLabel5.setFont(new Font("Segoe UI", 1, 12));
         jLabel5.setText("Description");
@@ -112,7 +113,7 @@ public class ManageProduct extends JFrame implements ActionListener, MouseListen
 
         txtDescription.setFont(new Font("Segoe UI", 1, 12));
         add(txtDescription);
-        txtDescription.setBounds(500, 350, 320, 27);
+        txtDescription.setBounds(500, 350, 370, 27);
 
         jLabel6.setFont(new Font("Segoe UI", 1, 12));
         jLabel6.setText("Category");
@@ -122,7 +123,7 @@ public class ManageProduct extends JFrame implements ActionListener, MouseListen
         comboBoxCategory.setFont(new Font("Segoe UI", 1, 12));
         comboBoxCategory.setModel(new DefaultComboBoxModel<>(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
         add(comboBoxCategory);
-        comboBoxCategory.setBounds(500, 420, 320, 27);
+        comboBoxCategory.setBounds(500, 420, 370, 27);
 
         btnSave.setFont(new Font("Segoe UI", 1, 12));
         btnSave.setText("Save");
@@ -136,21 +137,27 @@ public class ManageProduct extends JFrame implements ActionListener, MouseListen
         btnUpdate.setBounds(580, 460, 72, 27);
         btnUpdate.addActionListener(this);
 
+        btnDelete.setFont(new Font("Segoe UI", 1, 12));
+        btnDelete.setText("Delete");
+        add(btnDelete);
+        btnDelete.setBounds(660, 460, 72, 27);
+        btnDelete.addActionListener(this);
+
         btnReset.setFont(new Font("Segoe UI", 1, 12));
         btnReset.setText("Reset");
         add(btnReset);
-        btnReset.setBounds(660, 460, 72, 27);
+        btnReset.setBounds(740, 460, 72, 27);
         btnReset.addActionListener(this);
 
         btnClose.setFont(new Font("Segoe UI", 1, 12));
         btnClose.setText("Close");
         add(btnClose);
-        btnClose.setBounds(740, 460, 80, 27);
+        btnClose.setBounds(820, 460, 70, 27);
         btnClose.addActionListener(this);
 
-        jLabel3.setIcon(new ImageIcon(getClass().getResource("/images/All_page_Background.png")));
+        jLabel3.setIcon(new ImageIcon(getClass().getResource("/images/Orders_Background.png")));
         add(jLabel3);
-        jLabel3.setBounds(0, 0, 850, 600);
+        jLabel3.setBounds(0, 0, 900, 600);
     }
 
     private void getAllCategory() {
@@ -258,6 +265,33 @@ public class ManageProduct extends JFrame implements ActionListener, MouseListen
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, e);
                 }
+            }
+        }
+
+        if (d.getSource().equals(btnDelete)) {
+            try {
+                int index = tableProduct.getSelectedRow();
+                TableModel model = tableProduct.getModel();
+                String id = model.getValueAt(index, 0).toString();
+                try {
+                    Connection con = ConnectionProvider.getCon();
+                    Statement st = con.createStatement();
+                    int a = JOptionPane.showConfirmDialog(null, "Bạn có muốn xoá sản phẩm này không?", "Select", JOptionPane.YES_NO_OPTION);
+                    if (a == 0) {
+                        int rowsAffected = st.executeUpdate("delete from product where product_pk='" + id + "'");
+                        if (rowsAffected > 0) {
+                            JOptionPane.showMessageDialog(null, "xoá sản phẩm thành công!");
+                            setVisible(false);
+                            new ManageCategory().setVisible(true);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "không tìm thầy thông tin sản phẩm tương ứng để xoá!.");
+                        }
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Chọn ít nhất 1 sản phẩm để xoá!");
             }
         }
 
