@@ -220,6 +220,12 @@ public class ManageProduct extends JFrame implements ActionListener, MouseListen
             } else {
                 try {
                     Connection con = ConnectionProvider.getCon();
+                    Statement st = con.createStatement();
+                    ResultSet rs = st.executeQuery("select *from product where name = '" + name + "'");
+                    while (rs.next()) {
+                        JOptionPane.showMessageDialog(null, "Sản phẩm này đã tồn tại!");
+                        return;
+                    }
                     PreparedStatement ps = con.prepareStatement("insert into product (name,quantity,price,description,category_fk) values(?,?,?,?,?)");
                     ps.setString(1, name);
                     ps.setString(2, quantity);
