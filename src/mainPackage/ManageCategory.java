@@ -139,6 +139,12 @@ public class ManageCategory extends JFrame implements ActionListener, MouseListe
             } else {
                 try {
                     Connection con = ConnectionProvider.getCon();
+                    Statement st = con.createStatement();
+                    ResultSet rs = st.executeQuery("select *from category where name = '" + name + "'");
+                    while (rs.next()) {
+                        JOptionPane.showMessageDialog(null, "Danh mục này đã tồn tại!");
+                        return;
+                    }
                     PreparedStatement ps = con.prepareStatement("insert into category (name) values(?)");
                     ps.setString(1, name);
                     ps.executeUpdate();
